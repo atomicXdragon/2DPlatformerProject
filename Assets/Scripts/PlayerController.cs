@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
     private bool isJumping;
-    public float jumpCutMultiplier = 0.5f; // How much to reduce jump when released
+    public float jumpCutMultiplier = 0.5f; 
 
     private Rigidbody2D rb;
 
