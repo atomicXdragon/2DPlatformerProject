@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer))
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer)) // Detecting the ground 
         {
             return true;
         }
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position + Vector3.down * castDistance, boxSize);
+        Gizmos.DrawWireCube(transform.position + Vector3.down * castDistance, boxSize); // Drawing box within "Scene" for ease of debugging
     }
 
 }
