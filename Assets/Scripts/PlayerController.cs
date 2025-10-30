@@ -10,9 +10,14 @@ public class PlayerController : MonoBehaviour
 
     float horizontalMovement;
 
-    public bool isGrounded;
+    public bool grounded;
     private bool isJumping;
-    public float jumpCutMultiplier = 0.5f; 
+    public float jumpCutMultiplier = 0.5f;
+
+    public LayerMask groundLayer;
+    public Vector2 boxSize;
+    public float castDistance;
+
 
     private Rigidbody2D rb;
 
@@ -43,11 +48,11 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded &&! isJumping && (rb.linearVelocity.y == 0))
+        if (context.performed && isGrounded() && !isJumping)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Apply jump force
             isJumping = true;
-            isGrounded = false;
+            grounded = false;
         }
 
         if (context.canceled && isJumping && rb.linearVelocity.y > 0)
@@ -56,12 +61,22 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
     }
-    public void OnCollisionEnter2D(Collision2D collision)
+
+    public bool isGrounded()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer))
         {
-            isJumping = false;
-            isGrounded = true; 
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position + Vector3.down * castDistance, boxSize);
+    }
+
 }
