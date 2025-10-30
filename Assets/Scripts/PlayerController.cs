@@ -5,12 +5,10 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 3f;
-    public float reducedJumpMultiplier = 1.5f;
-    public float fallMultiplier = 2f;
+    public float jumpMultiplier = 2.5f;
 
     float horizontalMovement;
 
-    public bool grounded;
     private bool isJumping;
     public float jumpCutMultiplier = 0.5f;
 
@@ -32,12 +30,13 @@ public class PlayerController : MonoBehaviour
 
         if (rb.linearVelocity.y < 0)
         {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime; // Apply fall gravity increase
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime; // Apply fall gravity increase
+            isJumping = false;
         }
         else if (rb.linearVelocity.y > 0 && !isJumping)
         {
 
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (reducedJumpMultiplier - 1) * Time.fixedDeltaTime; // Apply reduced jump gravity
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime; // Apply reduced jump gravity
         }
     }
 
@@ -52,7 +51,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Apply jump force
             isJumping = true;
-            grounded = false;
         }
 
         if (context.canceled && isJumping && rb.linearVelocity.y > 0)
