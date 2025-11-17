@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float speed = 5f;
     public float dashSpeed = 10f;
     public float jumpForce = 3f;
@@ -38,9 +39,10 @@ public class PlayerController : MonoBehaviour
         {
             dashTime -= Time.fixedDeltaTime;
             if (dashTime <= 0)
+            {
                 isDashing = false;
                 isBouncing = false;
-
+            }
         }
 
         if (!isDashing)

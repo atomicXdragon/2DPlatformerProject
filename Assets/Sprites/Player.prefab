@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2451250700161575537}
   - component: {fileID: 2694158527906535191}
   - component: {fileID: 3335844854590072802}
+  - component: {fileID: 8510452631264612073}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Ground
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -223,6 +224,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 90e84be9-5688-4c76-9dd4-848a5dd4841e
     m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2694158527906535191}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 578e8a00-6adc-43ee-b7c4-a2c6ded99bf9
+    m_ActionName: Player/Dash
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -241,9 +258,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 4
-  isGrounded: 0
+  dashSpeed: 10
+  jumpForce: 6.5
+  jumpMultiplier: 2.5
+  isBouncing: 0
   jumpCutMultiplier: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  boxSize: {x: 0.94, y: 0.13}
+  castDistance: 0.54
+  bounceX: 10
+  bounceY: 8
 --- !u!61 &3335844854590072802
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -290,3 +316,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8510452631264612073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7848105437447100234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c438126bfde11d4d9256665c973018a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
