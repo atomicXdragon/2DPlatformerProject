@@ -133,4 +133,10 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
     }
+
+    public void OnGameOver()
+    {
+        rb.linearVelocity = Vector2.zero;
+        this.enabled = false; // Disable player controls
+    }
 }
