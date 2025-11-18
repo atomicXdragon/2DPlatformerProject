@@ -29,18 +29,31 @@ public class KillPlayer : MonoBehaviour
 
     private IEnumerator RespawnPlayer(GameObject player)
     {
-        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = Vector2.zero;
-        rb.simulated = false;
+        if (gameManager.life > 0)
+        {
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
 
-        SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
-        sprite.enabled = false;
+            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+            sprite.enabled = false;
 
-        yield return new WaitForSeconds(respawnDelay); 
-        player.transform.position = respawnPoint.position;
+            yield return new WaitForSeconds(respawnDelay);
+            player.transform.position = respawnPoint.position;
 
-        sprite.enabled = true;
-        rb.simulated = true;
+            sprite.enabled = true;
+            rb.simulated = true;
+        }
+        else
+        {
+            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+            sprite.enabled = false;
+
+        }
 
     }
 }

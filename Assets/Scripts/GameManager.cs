@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Linq;
 using TMPro;
@@ -5,11 +6,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 public class GameManager : MonoBehaviour
 {
     public int life = 3;
-    public TextMeshProUGUI livesCounter;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+    public GameObject heart1;
+    public GameObject heart2;
+    public GameObject heart3;
+
+
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI startText;
     public bool gameRunning;
@@ -55,14 +64,21 @@ public class GameManager : MonoBehaviour
 
     private void UpdateLifeUI()
     {
-        if (livesCounter != null)
+        for (int i = 0; i < hearts.Length; i++)
         {
-            livesCounter.text = "LIVES: " + life;
-        }
+            if (i < life)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
 
-        if (gameOverText != null)
-        {
-            gameOverScreen.gameObject.SetActive(false);
+            if (gameOverText != null)
+            {
+                gameOverScreen.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -75,14 +91,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         playerController.OnGameOver();
-        audioManager.musicSource.Stop();    
+        audioManager.musicSource.Stop();
         audioManager.PlaySFX(audioManager.gameOverSound, 0.5f);
-
         if (gameOverText != null)
         {
-            gameOverScreen.SetActive(true);
-            livesCounter.gameObject.SetActive(false);
-
+            gameOverScreen.gameObject.SetActive(true);
             Invoke("RestartGame", 2f);
         }
     }
@@ -109,6 +122,7 @@ public class GameManager : MonoBehaviour
         startText.gameObject.SetActive(false);
         StartGame();
     }
+
 
 }
 

@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     
 
     public LayerMask groundLayer;
+    public LayerMask wallLayer;
     public Vector2 boxSize;
     public float castDistance;
     private float dashTime = 0f;
@@ -105,7 +106,7 @@ public class PlayerController : MonoBehaviour
     }
     public bool isGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer)) // Detecting the ground 
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer) || Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, wallLayer)) // Detecting the ground 
         {
             return true;
         }
@@ -122,17 +123,18 @@ public class PlayerController : MonoBehaviour
 
     public float bounceX = 10;
     public float bounceY = 8;
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") && isDashing)
         {
-            Debug.Log("Hit wall during dash.");
             rb.linearVelocity = new Vector2((-lastDashDirection * bounceX), bounceY);
             dashTime = 0.2f;
             isBouncing = true;
             isJumping = false;
         }
     }
+
 
     public void OnGameOver()
     {
