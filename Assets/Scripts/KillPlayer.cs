@@ -5,19 +5,25 @@ public class KillPlayer : MonoBehaviour
 {
     public Transform respawnPoint;
     public GameObject player;
-    public GameManager GameManager;
+    public GameManager gameManager;
     public float respawnDelay = 0.5f;
-
+    public AudioManager audioManager;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            if (gameManager.life > 1)
+            {
+                audioManager.PlaySFX(audioManager.deathSound, 0.5f);
+            }
             StartCoroutine(RespawnPlayer(collision.gameObject));
-            GameManager.LoseLife();
+            gameManager.LoseLife();
         }
     }
     void Start()
     {
+        gameManager = FindFirstObjectByType<GameManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
         respawnPoint = transform.parent.Find("RespawnPoint");
     }
 

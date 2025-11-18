@@ -5,10 +5,14 @@ public class CoinPickup : MonoBehaviour
     public AudioClip coinSound;
     public int coinValue = 5;
     private ScoreManager scoreManager;
+
+    AudioManager audioManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         scoreManager = FindFirstObjectByType<ScoreManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
 
     }
 
@@ -20,11 +24,9 @@ public class CoinPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        AudioSource cameraAudio = Camera.main.GetComponent<AudioSource>();
-
-        if (other.CompareTag("Player"))
+       if (other.CompareTag("Player"))
         {
-            cameraAudio.PlayOneShot(coinSound);
+            audioManager.PlaySFX(audioManager.coinPickup, 0.8f);
             scoreManager.AddScore(coinValue);
             Destroy(gameObject);
         }
