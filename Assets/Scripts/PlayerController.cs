@@ -28,10 +28,18 @@ public class PlayerController : MonoBehaviour
     public float castDistance;
     private float dashTime = 0f;
     private Rigidbody2D rb;
+    Animator animator;  
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // Assign Rigidbody2D component
+        animator = GetComponent<Animator>();
+    }
+    private void Update()
+    {
+        FlipSprite();
+        animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
+        animator.SetFloat("yVelocity", rb.linearVelocity.y);
     }
 
     void FixedUpdate()
@@ -67,6 +75,18 @@ public class PlayerController : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         horizontalMovement = context.ReadValue<Vector2>().x; // Read input value from InputActions
+    }
+
+    void FlipSprite()
+    {
+        if (horizontalMovement > 0 && transform.localScale.x < 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+        else if (horizontalMovement < 0 && transform.localScale.x > 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -109,6 +129,7 @@ public class PlayerController : MonoBehaviour
         if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer) || Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, wallLayer)) // Detecting the ground 
         {
             return true;
+
         }
         else
         {
@@ -132,6 +153,7 @@ public class PlayerController : MonoBehaviour
             dashTime = 0.2f;
             isBouncing = true;
             isJumping = false;
+
         }
     }
 

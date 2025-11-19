@@ -1164,7 +1164,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.24158953, g: 0.30994332, b: 0.5754717, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1736,7 +1736,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 1113290372}
   levelCounter: {fileID: 1992451640}
   audioManager: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!61 &600024197
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2120,6 +2119,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c438126bfde11d4d9256665c973018a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &709745267
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709745254}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4592acec02e05cd45934c87e299b306c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &740304956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2943,7 +2964,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 291488187}
   levelCounter: {fileID: 1992451640}
   audioManager: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!61 &1329755306
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5029,7 +5049,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 0}
   levelCounter: {fileID: 1992451640}
   audioManager: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!61 &2123614715
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5469,6 +5488,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2451250700161575537, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: bounceX
       value: 8
@@ -5479,15 +5502,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: boxSize.x
-      value: 0.94
+      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: boxSize.y
-      value: 0.07
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: castDistance
-      value: 0.51
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: wallLayer.m_Bits
@@ -5495,19 +5518,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Size.x
-      value: 0.98114365
+      value: 0.532063
       objectReference: {fileID: 0}
     - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Size.y
-      value: 0.9773704
+      value: 0.34931988
       objectReference: {fileID: 0}
     - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Offset.x
-      value: -0.0007941723
+      value: 0.0024713278
       objectReference: {fileID: 0}
     - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Offset.y
-      value: 0.0039919466
+      value: 0.012689285
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.5416667
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335844854590072802, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1800434427432842565, guid: fc951bd82ee2d24469b96c244ef92433, type: 3}
+    - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265634013703294839, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265634013703294839, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7265634013703294839, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5616,7 +5671,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7848105437447100234, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 709745267}
   m_SourcePrefab: {fileID: 100100000, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
 --- !u!1001 &6165103006802539340
 PrefabInstance:
