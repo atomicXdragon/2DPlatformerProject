@@ -29,17 +29,31 @@ public class PlayerController : MonoBehaviour
     private float dashTime = 0f;
     private Rigidbody2D rb;
     Animator animator;  
+    public Sprite jumpSprite;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); // Assign Rigidbody2D component
+        rb = GetComponent<Rigidbody2D>(); 
         animator = GetComponent<Animator>();
     }
+
     private void Update()
     {
         FlipSprite();
-        animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
-        animator.SetFloat("yVelocity", rb.linearVelocity.y);
+
+        if (!isGrounded())
+        {
+            // Manually set jump sprite
+            spriteRenderer.sprite = jumpSprite;
+            animator.enabled = false; 
+        }
+        else
+        {
+            // Run animation
+            animator.enabled = true;
+            animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
+        }
     }
 
     void FixedUpdate()
