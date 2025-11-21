@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed = 5f;
-    public float dashSpeed = 10f;
+    public float dashSpeed = 10f; 
     public float jumpForce = 3f;
     public float jumpMultiplier = 2.5f;
 
@@ -30,12 +30,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     Animator animator;  
     public Sprite jumpSprite;
+    private bool facingRight;
+
     public SpriteRenderer spriteRenderer;
+    public AudioManager audioManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); 
         animator = GetComponent<Animator>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     private void Update()
@@ -96,10 +100,13 @@ public class PlayerController : MonoBehaviour
         if (horizontalMovement > 0 && transform.localScale.x < 0)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            facingRight = true;
+            
         }
         else if (horizontalMovement < 0 && transform.localScale.x > 0)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            facingRight = false;
         }
     }
 
@@ -123,13 +130,13 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && canDash)
         {
-            float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : 1f;
-            rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
-            isDashing = true;
-            lastDashDirection = direction;
-            dashTime = 0.2f; 
-            canDash = false;
-            StartCoroutine(DashCooldown());
+                float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : (facingRight ? 1f : -1f);
+                rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
+                isDashing = true;
+                lastDashDirection = direction;
+                dashTime = 0.2f; 
+                canDash = false;
+                StartCoroutine(DashCooldown());
         }
     }
 
