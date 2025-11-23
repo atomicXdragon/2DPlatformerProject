@@ -5514,6 +5514,10 @@ PrefabInstance:
       value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
+      propertyPath: fallSprite
+      value: 
+      objectReference: {fileID: -8731718606991038649, guid: 569bd217492d6f14090f6c86dec82dfa, type: 3}
+    - target: {fileID: 2694158527906535191, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: jumpSprite
       value: 
       objectReference: {fileID: 3329334105496400099, guid: 336baa53a7c1748418b2b59db8b9c7a3, type: 3}

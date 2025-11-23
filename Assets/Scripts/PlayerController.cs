@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     Animator animator;  
     public Sprite jumpSprite;
+    public Sprite fallSprite;
     public SpriteRenderer spriteRenderer;
 
     void Start()
@@ -42,11 +43,17 @@ public class PlayerController : MonoBehaviour
     {
         FlipSprite();
 
-        if (!isGrounded())
+        if (!isGrounded() && rb.linearVelocity.y > 0)
         {
             // Manually set jump sprite
             spriteRenderer.sprite = jumpSprite;
             animator.enabled = false; 
+        }
+        else if (!isGrounded() && rb.linearVelocity.y < 0)
+        {
+            // Manually set fall sprite
+            spriteRenderer.sprite = fallSprite;
+            animator.enabled = false;
         }
         else
         {
