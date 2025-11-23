@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 boxSize;
     public float castDistance;
     private float dashTime = 0f;
+
+    private bool facingRight;
+
     private Rigidbody2D rb;
     Animator animator;  
     public Sprite jumpSprite;
@@ -103,10 +106,12 @@ public class PlayerController : MonoBehaviour
         if (horizontalMovement > 0 && transform.localScale.x < 0)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            facingRight = true;
         }
         else if (horizontalMovement < 0 && transform.localScale.x > 0)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            facingRight = false;
         }
     }
 
@@ -130,7 +135,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && canDash)
         {
-            float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : 1f;
+            float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : (facingRight ? 1f : -1f);
+
             rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
             isDashing = true;
             lastDashDirection = direction;
