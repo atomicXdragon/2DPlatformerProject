@@ -17,7 +17,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip wallSound;
     public AudioClip walkSound;
     public AudioClip dashSound;
-
+    public AudioClip armourBreak;
+    public AudioClip robotBreak;
 
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {

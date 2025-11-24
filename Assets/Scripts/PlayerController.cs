@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     float horizontalMovement;
 
     private bool isJumping;
-    private bool isDashing = false;
+    public bool isDashing = false;
     private bool canDash = true;
     public bool isBouncing;
     public float jumpCutMultiplier = 0.5f;
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(1f); // 1 second cooldown
+        yield return new WaitForSeconds(0.5f); // 1 second cooldown
         canDash = true;
     }
     public bool isGrounded()
