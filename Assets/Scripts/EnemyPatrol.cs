@@ -16,9 +16,12 @@ public class EnemyPatrol : MonoBehaviour
     private Transform currentPoint;
     private GameManager gameManager;
     private AudioManager audioManager;
+    Animator animator;
     private PlayerController playerController;
     private float distanceToPoint;
     private bool hasSwapped = false;
+    public Sprite hurtSprite;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -26,6 +29,8 @@ public class EnemyPatrol : MonoBehaviour
         playerController = FindFirstObjectByType<PlayerController>();
         gameManager = FindFirstObjectByType<GameManager>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        animator = GetComponent<Animator>();
+
         normalHitbox.isTrigger = false;
         bigHitbox.isTrigger = true;
         bigHitbox.enabled = false;
@@ -67,6 +72,7 @@ public class EnemyPatrol : MonoBehaviour
         if (distanceToPoint < 0.5f)
         {
             currentPoint = currentPoint == pointB.transform ? pointA.transform : pointB.transform;
+            FlipSprite();
         }
     }
 
@@ -79,6 +85,9 @@ public class EnemyPatrol : MonoBehaviour
             {
                 audioManager.PlaySFX(audioManager.armourBreak, 0.5f);
                 hasSwapped = true;
+                animator.enabled = false;
+                spriteRenderer.sprite = hurtSprite;
+
                 StartCoroutine(SwitchToBigHitbox());
             }
         }
@@ -142,5 +151,11 @@ public class EnemyPatrol : MonoBehaviour
             sprite.enabled = true;
             playerRb.simulated = true;
         }
+    }
+    void FlipSprite()
+    {
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
     }
 }
