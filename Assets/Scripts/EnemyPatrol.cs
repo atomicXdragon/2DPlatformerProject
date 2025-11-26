@@ -14,8 +14,11 @@ public class EnemyPatrol : MonoBehaviour
 
     private Rigidbody2D rb;
     private Transform currentPoint;
+
     private GameManager gameManager;
     private AudioManager audioManager;
+    private ScoreManager scoreManager;
+
     Animator animator;
     private PlayerController playerController;
     private float distanceToPoint;
@@ -30,6 +33,7 @@ public class EnemyPatrol : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         audioManager = FindFirstObjectByType<AudioManager>();
         animator = GetComponent<Animator>();
+        scoreManager = FindFirstObjectByType<ScoreManager>();
 
         normalHitbox.isTrigger = false;
         bigHitbox.isTrigger = true;
@@ -112,6 +116,7 @@ public class EnemyPatrol : MonoBehaviour
                 if (health <= 0)
                 {
                     audioManager.PlaySFX(audioManager.robotBreak, 0.5f);
+                    scoreManager.AddScore(10);
                     Destroy(gameObject);
                 }
             }

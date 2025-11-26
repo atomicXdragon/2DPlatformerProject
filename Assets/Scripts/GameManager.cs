@@ -29,10 +29,11 @@ public class GameManager : MonoBehaviour
 
     private bool gameOverMusicPlaying = false;
     public Transform respawnPoint;
-
+    public bool gameEnded;
 
     void Start()
     {
+        gameEnded = false;
         transform.position = respawnPoint.position;
         playerController = FindFirstObjectByType<PlayerController>();
         audioManager = FindFirstObjectByType<AudioManager>();
@@ -90,9 +91,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        playerController.OnGameOver();
+        gameEnded = true;
+        playerController.GetComponent<PlayerInput>().enabled = false;
+        playerController.enabled = false;
         audioManager.musicSource.Stop();
         audioManager.PlaySFX(audioManager.gameOverSound, 0.5f);
+
         if (gameOverText != null)
         {
             gameOverScreen.gameObject.SetActive(true);

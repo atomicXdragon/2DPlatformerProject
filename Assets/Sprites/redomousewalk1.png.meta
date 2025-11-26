@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f6df1f0b5dba142409c0f40ca00c9428
+guid: 9e97211900ccfa7469a2c3af9e4d253f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9111194030781335450
-    second: Robowalk2_0
+      213: -7313921940102473858
+    second: redomousewalk1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 48
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Robowalk2_0
+      name: redomousewalk1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 12
-        height: 23
+        width: 26
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a978164a2b6717e70800000000000000
-      internalID: 9111194030781335450
+      spriteID: e77914d0fbabf7a90800000000000000
+      internalID: -7313921940102473858
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Robowalk2_0: 9111194030781335450
+      redomousewalk1_0: -7313921940102473858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

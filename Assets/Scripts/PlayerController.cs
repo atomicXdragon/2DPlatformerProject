@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 5f;
     public float dashSpeed = 10f;
-    public float jumpForce = 3f;
+    public float jumpForce = 3.5f;
     public float jumpMultiplier = 2.5f;
 
     private float lastDashDirection;
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool canDash = true;
     public bool isBouncing;
     public float jumpCutMultiplier = 0.5f;
-    
+
 
     public LayerMask groundLayer;
     public LayerMask wallLayer;
@@ -31,26 +31,45 @@ public class PlayerController : MonoBehaviour
     private bool facingRight;
 
     private Rigidbody2D rb;
-    Animator animator;  
+    Animator animator;
+    private AudioManager audioManager;
+
     public Sprite jumpSprite;
     public Sprite fallSprite;
     public SpriteRenderer spriteRenderer;
 
+    private float coyoteTime = 8f / 60f;
+    private float coyoteTimeCounter;
+
+    private bool isPlayingWalkSound = false;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
+
 
     private void Update()
     {
         FlipSprite();
 
+        if (isGrounded())
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+
         if (!isGrounded() && rb.linearVelocity.y > 0)
         {
             // Manually set jump sprite
             spriteRenderer.sprite = jumpSprite;
-            animator.enabled = false; 
+            animator.enabled = false;
         }
         else if (!isGrounded() && rb.linearVelocity.y < 0)
         {
@@ -82,6 +101,10 @@ public class PlayerController : MonoBehaviour
         {
             float currentSpeed = isBouncing ? speed * 0.5f : speed;
             rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocity.y); // Movement
+            if (horizontalMovement != 0 && isGrounded() && !isPlayingWalkSound)
+            {
+                StartCoroutine(WalkSoundTimer());
+            }
         }
 
         if (rb.linearVelocity.y < 0)
@@ -94,6 +117,19 @@ public class PlayerController : MonoBehaviour
 
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime; // Apply reduced jump gravity
         }
+    }
+
+    public IEnumerator WalkSoundTimer()
+    {
+        isPlayingWalkSound = true;
+
+        while (horizontalMovement != 0 && isGrounded() && !isDashing)
+        {
+            audioManager.PlaySFX(audioManager.walkSound, 0.3f);
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        isPlayingWalkSound = false;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -117,15 +153,18 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded() && !isJumping && !isBouncing)
+
+        if (context.performed && coyoteTimeCounter > 0 && !isJumping && !isBouncing)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Apply jump force
             isJumping = true;
+            audioManager.PlaySFX(audioManager.jumpSound, 0.5f);
         }
 
         if (context.canceled && isJumping && rb.linearVelocity.y > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier); // Cut jump short
+            coyoteTimeCounter = 0;
             isJumping = false;
         }
     }
@@ -139,8 +178,9 @@ public class PlayerController : MonoBehaviour
 
             rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
             isDashing = true;
+            audioManager.PlaySFX(audioManager.dashSound, 0.5f);
             lastDashDirection = direction;
-            dashTime = 0.2f; 
+            dashTime = 0.25f;
             canDash = false;
             StartCoroutine(DashCooldown());
         }
@@ -171,16 +211,21 @@ public class PlayerController : MonoBehaviour
 
     public float bounceX = 10;
     public float bounceY = 8;
+    public Vector2 pointOfContact;
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") && isDashing)
         {
-            rb.linearVelocity = new Vector2((-lastDashDirection * bounceX), bounceY);
-            dashTime = 0.2f;
-            isBouncing = true;
-            isJumping = false;
-
+            pointOfContact = collision.contacts[0].normal;
+            if (pointOfContact.x != 0)
+            {
+                rb.linearVelocity = new Vector2((-lastDashDirection * bounceX), bounceY);
+                dashTime = 0.25f;
+                isBouncing = true;
+                isJumping = false;
+                audioManager.PlaySFX(audioManager.wallSound, 0.5f);
+            }
         }
     }
 

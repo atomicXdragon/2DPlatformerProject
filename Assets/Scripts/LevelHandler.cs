@@ -6,7 +6,7 @@ public class LevelHandler : MonoBehaviour
     public Transform respawnPoint;
     private CameraController cam;
     public TextMeshProUGUI levelCounter;
-    public static int currentLevel = 0;
+    public static int currentLevel = 1;
     public AudioManager audioManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
