@@ -21,7 +21,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip walkSound;
     public AudioClip dashSound;
 
-    public AudioClip cockroachKill;
     public AudioClip armourBreak;
     public AudioClip robotBreak;
 

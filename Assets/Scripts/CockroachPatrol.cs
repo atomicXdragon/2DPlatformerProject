@@ -12,7 +12,7 @@ public class CockroachPatrol : MonoBehaviour
     public float respawnDelay = 0.5f;
     private Transform respawnPoint;
     private float distanceToPoint;
-
+    private bool isAlive;
     private Rigidbody2D rb;
     private Transform currentPoint;
     private GameManager gameManager;
@@ -36,13 +36,16 @@ public class CockroachPatrol : MonoBehaviour
         pointB = transform.parent.Find("PointB").gameObject;
 
         currentPoint = pointB.transform;
-
+        isAlive = true;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Patrol();
+        if (isAlive)
+        {
+            Patrol();
+        }
     }
     void Patrol()
     {
@@ -67,7 +70,7 @@ public class CockroachPatrol : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            audioManager.PlaySFX(audioManager.cockroachKill, 0.5f);
+            audioManager.PlaySFX(audioManager.robotBreak, 0.5f);
             scoreManager.AddScore(10);
             StartCoroutine(CockroachSquish());
         }
@@ -111,6 +114,8 @@ public class CockroachPatrol : MonoBehaviour
     IEnumerator CockroachSquish()
     {
         playerRb.linearVelocity = new Vector2(0, bounce);
+        isAlive = false;
+        rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.5f);
         body.enabled = false;
         Destroy(gameObject);

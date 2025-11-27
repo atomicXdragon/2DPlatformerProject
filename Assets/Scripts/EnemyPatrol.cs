@@ -48,7 +48,7 @@ public class EnemyPatrol : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (health == 2)
         {
