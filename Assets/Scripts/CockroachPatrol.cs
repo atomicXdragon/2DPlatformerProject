@@ -18,6 +18,8 @@ public class CockroachPatrol : MonoBehaviour
     private GameManager gameManager;
     private AudioManager audioManager;
     private ScoreManager scoreManager;
+    public Sprite cockroachSquash;
+    public SpriteRenderer spriteRenderer;
     Animator animator;
 
 
@@ -116,6 +118,9 @@ public class CockroachPatrol : MonoBehaviour
         playerRb.linearVelocity = new Vector2(0, bounce);
         isAlive = false;
         rb.linearVelocity = Vector2.zero;
+        spriteRenderer.sprite = cockroachSquash;
+        animator.enabled = false;
+
         yield return new WaitForSeconds(0.5f);
         body.enabled = false;
         Destroy(gameObject);
