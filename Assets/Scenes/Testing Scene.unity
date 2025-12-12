@@ -4922,15 +4922,15 @@ PrefabInstance:
       objectReference: {fileID: -7313921940102473858, guid: 9e97211900ccfa7469a2c3af9e4d253f, type: 3}
     - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.9924528
       objectReference: {fileID: 0}
     - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.9924528
       objectReference: {fileID: 0}
     - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.9924528
       objectReference: {fileID: 0}
     - target: {fileID: 5369200522111977392, guid: 973fdea1d6420e24d9b582ee43d0bb05, type: 3}
       propertyPath: m_SortingOrder
