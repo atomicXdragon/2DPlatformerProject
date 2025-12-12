@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 336baa53a7c1748418b2b59db8b9c7a3
+guid: 848a7c955105abd4ab03dd6a849b5774
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3329334105496400099
-    second: MouseJump_0
+      213: -8508100923040025027
+    second: cockroachSquash_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MouseJump_0
+      name: cockroachSquash_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 26
-        height: 20
+        width: 22
+        height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3e0b4b8babb243e20800000000000000
-      internalID: 3329334105496400099
+      spriteID: d36b601d9472de980800000000000000
+      internalID: -8508100923040025027
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 065e8399e694d6b4a96a54b086d80932
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MouseJump_0: 3329334105496400099
+      cockroachSquash_0: -8508100923040025027
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

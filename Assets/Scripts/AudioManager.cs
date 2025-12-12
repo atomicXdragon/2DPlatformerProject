@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
+    [Header("Audio Sources")]
     public AudioSource musicSource;
     [SerializeField] AudioSource sfxSource;
 
+    [Header("Music")]
     public AudioClip gameMusic;
     public AudioClip titleMusic;
+
+    [Header("SFX")]
     public AudioClip coinPickup;
     public AudioClip powerUpPickup;
     public AudioClip deathSound;
@@ -18,6 +21,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip walkSound;
     public AudioClip dashSound;
 
+    public AudioClip armourBreak;
+    public AudioClip robotBreak;
 
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
