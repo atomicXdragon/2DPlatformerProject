@@ -6,15 +6,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed = 5f;
-<<<<<<< HEAD
-    public float dashSpeed = 10f; 
-    public float jumpForce = 3f;
-=======
     public float dashSpeed = 10f;
     public float jumpForce = 3.5f;
->>>>>>> 58dc887219ee681dc4d9732073a2fb9fee89cf82
     public float jumpMultiplier = 2.5f;
 
     private float lastDashDirection;
@@ -25,7 +19,6 @@ public class PlayerController : MonoBehaviour
     private bool canDash = true;
     public bool isBouncing;
     public float jumpCutMultiplier = 0.5f;
-
 
     public LayerMask groundLayer;
     public LayerMask wallLayer;
@@ -40,14 +33,8 @@ public class PlayerController : MonoBehaviour
     private AudioManager audioManager;
 
     public Sprite jumpSprite;
-<<<<<<< HEAD
-    private bool facingRight;
-
-=======
     public Sprite fallSprite;
->>>>>>> 58dc887219ee681dc4d9732073a2fb9fee89cf82
     public SpriteRenderer spriteRenderer;
-    public AudioManager audioManager;
 
     private float coyoteTime = 8f / 60f;
     private float coyoteTimeCounter;
@@ -61,7 +48,6 @@ public class PlayerController : MonoBehaviour
         audioManager = FindFirstObjectByType<AudioManager>();
     }
 
-
     private void Update()
     {
         FlipSprite();
@@ -74,7 +60,6 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
-
 
         if (!isGrounded() && rb.linearVelocity.y > 0)
         {
@@ -111,7 +96,7 @@ public class PlayerController : MonoBehaviour
         if (!isDashing)
         {
             float currentSpeed = isBouncing ? speed * 0.5f : speed;
-            rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocity.y); // Movement
+            rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocity.y);
             if (horizontalMovement != 0 && isGrounded() && !isPlayingWalkSound)
             {
                 StartCoroutine(WalkSoundTimer());
@@ -120,13 +105,12 @@ public class PlayerController : MonoBehaviour
 
         if (rb.linearVelocity.y < 0)
         {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime; // Apply fall gravity increase
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime;
             isJumping = false;
         }
         else if (rb.linearVelocity.y > 0 && !isJumping)
         {
-
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime; // Apply reduced jump gravity
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplier - 1) * Time.fixedDeltaTime;
         }
     }
 
@@ -145,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        horizontalMovement = context.ReadValue<Vector2>().x; // Read input value from InputActions
+        horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     void FlipSprite()
@@ -154,10 +138,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             facingRight = true;
-<<<<<<< HEAD
-            
-=======
->>>>>>> 58dc887219ee681dc4d9732073a2fb9fee89cf82
         }
         else if (horizontalMovement < 0 && transform.localScale.x > 0)
         {
@@ -168,38 +148,26 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-
         if (context.performed && coyoteTimeCounter > 0 && !isJumping && !isBouncing)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Apply jump force
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumping = true;
             audioManager.PlaySFX(audioManager.jumpSound, 0.5f);
         }
 
         if (context.canceled && isJumping && rb.linearVelocity.y > 0)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier); // Cut jump short
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier);
             coyoteTimeCounter = 0;
             isJumping = false;
         }
     }
 
-
     public void Dash(InputAction.CallbackContext context)
     {
         if (context.performed && canDash)
         {
-<<<<<<< HEAD
-                float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : (facingRight ? 1f : -1f);
-                rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
-                isDashing = true;
-                lastDashDirection = direction;
-                dashTime = 0.2f; 
-                canDash = false;
-                StartCoroutine(DashCooldown());
-=======
             float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : (facingRight ? 1f : -1f);
-
             rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
             isDashing = true;
             audioManager.PlaySFX(audioManager.dashSound, 0.5f);
@@ -207,21 +175,20 @@ public class PlayerController : MonoBehaviour
             dashTime = 0.25f;
             canDash = false;
             StartCoroutine(DashCooldown());
->>>>>>> 58dc887219ee681dc4d9732073a2fb9fee89cf82
         }
     }
 
     public IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(0.5f); // 1 second cooldown
+        yield return new WaitForSeconds(0.5f);
         canDash = true;
     }
+
     public bool isGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer) || Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, wallLayer)) // Detecting the ground 
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, groundLayer) || Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, castDistance, wallLayer))
         {
             return true;
-
         }
         else
         {
@@ -231,7 +198,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position + Vector3.down * castDistance, boxSize); // Drawing box within "Scene" for ease of debugging
+        Gizmos.DrawWireCube(transform.position + Vector3.down * castDistance, boxSize);
     }
 
     public float bounceX = 10;
@@ -254,10 +221,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void OnGameOver()
     {
         rb.linearVelocity = Vector2.zero;
-        this.enabled = false; // Disable player controls
+        this.enabled = false;
     }
 }
