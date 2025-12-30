@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
 
     private float coyoteTime = 8f / 60f;
     private float coyoteTimeCounter;
-
     private bool isPlayingWalkSound = false;
 
     void Start()
