@@ -5,6 +5,7 @@ public class ScoreManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI victoryScoreText;
     public TextMeshProUGUI highScoreText;
 
     public GameManager gameManager;
@@ -26,6 +27,7 @@ public class ScoreManager : MonoBehaviour
         {
             SaveCurrentScore();
             finalScoreText.text = "SCORE: " + GetScore();
+            victoryScoreText.text = "SCORE: " + GetScore();
             hasUpdatedFinalScore = true;
         }
     }

@@ -18,12 +18,13 @@ public class GameManager : MonoBehaviour
     public GameObject heart2;
     public GameObject heart3;
 
-
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI startText;
     public bool gameRunning;
     public GameObject titleScreen;
     public GameObject gameOverScreen;
+    public GameObject victoryScreen;
+    public GameObject victoryTrigger;
     private PlayerController playerController;
     private AudioManager audioManager;
 
@@ -63,6 +64,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == victoryTrigger)
+        {
+            WinScreen();
+        }
+    }
     private void UpdateLifeUI()
     {
         for (int i = 0; i < hearts.Length; i++)
@@ -104,6 +112,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void WinScreen()
+    {
+        gameEnded = true;
+        victoryScreen.SetActive(true);
+        playerController.GetComponent<PlayerInput>().enabled = false;
+        playerController.enabled = false;
+        audioManager.musicSource.Stop();
+        Invoke("RestartGame", 3f);
+    }
     private void RestartGame()
     {
         Time.timeScale = 1;
