@@ -32,8 +32,23 @@ public class GameManager : MonoBehaviour
     public Transform respawnPoint;
     public bool gameEnded;
 
+    public GameObject mouseNPC;
+    public SpriteRenderer NPCSprite;
+    public Sprite npcJump;
+    private Rigidbody2D npcRb;
+    public Sprite npcStand;
+
+    public Sprite playerJump;
+    public Sprite playerStand;
+    private Rigidbody2D playerRb;
+    public SpriteRenderer playerSprite;
+    public ScoreManager scoreManager;
+    private bool winTriggered = false;
+
     void Start()
     {
+        npcRb = mouseNPC.GetComponent<Rigidbody2D>();
+        playerRb = gameObject.GetComponent<Rigidbody2D>();
         gameEnded = false;
         transform.position = respawnPoint.position;
         playerController = FindFirstObjectByType<PlayerController>();
@@ -111,16 +126,89 @@ public class GameManager : MonoBehaviour
             Invoke("RestartGame", 2f);
         }
     }
-
     public void WinScreen()
     {
+        if (!winTriggered)
+        {
+            winTriggered = true;
+
+            // Stop all movement instantly
+            playerRb.linearVelocity = Vector2.zero;
+            npcRb.linearVelocity = Vector2.zero;
+
+            // Disable animators so they don't override sprites
+            playerController.GetComponent<Animator>().enabled = false;
+
+            // Set to standing sprites
+            playerSprite.sprite = playerStand;
+            NPCSprite.sprite = npcStand;
+
+            playerController.enabled = false;
+            StartCoroutine(WaitForGroundedThenWin());
+        }
+    }
+
+    private float jumpForce = 7f;
+
+    private IEnumerator WaitForGroundedThenWin()
+    {
+        while (Mathf.Abs(playerRb.linearVelocity.y) > 0.1f)
+        {
+            yield return null;
+        }
+
+        scoreManager.AddScore(100);
         gameEnded = true;
+        StartCoroutine(ContinuousJumping());
+        StartCoroutine(UpdateSprites());
+        StartCoroutine(WaitForWinScreen());
+    }
+
+    private IEnumerator ContinuousJumping()
+    {
+        while (!victoryScreen.activeSelf)
+        {
+            // Change to jump sprites
+            playerSprite.sprite = playerJump;
+            NPCSprite.sprite = npcJump;
+
+            npcRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            audioManager.PlaySFX(audioManager.jumpSound, 0.5f);
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    private IEnumerator UpdateSprites()
+    {
+        while (!victoryScreen.activeSelf)
+        {
+            // Only change to stand when they hit the ground (velocity is near zero or negative)
+            if (playerRb.linearVelocity.y <= 0.1f)
+            {
+                playerSprite.sprite = playerStand;
+            }
+
+            if (npcRb.linearVelocity.y <= 0.1f)
+            {
+                NPCSprite.sprite = npcStand;
+            }
+
+            yield return null; // Check every frame
+        }
+    }
+
+    private IEnumerator WaitForWinScreen()
+    {
+        yield return new WaitForSeconds(5f);
         victoryScreen.SetActive(true);
         playerController.GetComponent<PlayerInput>().enabled = false;
         playerController.enabled = false;
         audioManager.musicSource.Stop();
+        audioManager.PlaySFX(audioManager.victorySound, 0.5f);
         Invoke("RestartGame", 3f);
     }
+
     private void RestartGame()
     {
         Time.timeScale = 1;

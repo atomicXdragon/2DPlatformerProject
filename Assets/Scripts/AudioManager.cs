@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [Header("Music")]
     public AudioClip gameMusic;
     public AudioClip titleMusic;
+    public AudioClip victorySound;
 
     [Header("SFX")]
     public AudioClip coinPickup;
