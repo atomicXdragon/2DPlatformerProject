@@ -62,21 +62,31 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded() && rb.linearVelocity.y > 0)
         {
-            // Manually set jump sprite
             spriteRenderer.sprite = jumpSprite;
-            animator.enabled = false;
+            if (animator != null && animator.enabled)
+            {
+                animator.enabled = false;
+            }
         }
         else if (!isGrounded() && rb.linearVelocity.y < 0)
         {
-            // Manually set fall sprite
             spriteRenderer.sprite = fallSprite;
-            animator.enabled = false;
+            if (animator != null && animator.enabled)
+            {
+                animator.enabled = false;
+            }
         }
         else
         {
-            // Run animation
-            animator.enabled = true;
-            animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
+            if (animator != null && !animator.enabled)
+            {
+                animator.enabled = true;
+            }
+
+            if (animator != null)
+            {
+                animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
+            }
         }
     }
 
@@ -119,7 +129,10 @@ public class PlayerController : MonoBehaviour
 
         while (horizontalMovement != 0 && isGrounded() && !isDashing)
         {
-            audioManager.PlaySFX(audioManager.walkSound, 0.3f);
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.walkSound, 0.3f);
+            }
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -151,7 +164,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumping = true;
-            audioManager.PlaySFX(audioManager.jumpSound, 0.5f);
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.jumpSound, 0.5f);
+            }
         }
 
         if (context.canceled && isJumping && rb.linearVelocity.y > 0)
@@ -169,7 +185,10 @@ public class PlayerController : MonoBehaviour
             float direction = horizontalMovement != 0 ? Mathf.Sign(horizontalMovement) : (facingRight ? 1f : -1f);
             rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
             isDashing = true;
-            audioManager.PlaySFX(audioManager.dashSound, 0.5f);
+            if (audioManager != null)
+            {
+                audioManager.PlaySFX(audioManager.dashSound, 0.5f);
+            }
             lastDashDirection = direction;
             dashTime = 0.25f;
             canDash = false;
@@ -215,7 +234,10 @@ public class PlayerController : MonoBehaviour
                 dashTime = 0.25f;
                 isBouncing = true;
                 isJumping = false;
-                audioManager.PlaySFX(audioManager.wallSound, 0.5f);
+                if (audioManager != null)
+                {
+                    audioManager.PlaySFX(audioManager.wallSound, 0.5f);
+                }
             }
         }
     }

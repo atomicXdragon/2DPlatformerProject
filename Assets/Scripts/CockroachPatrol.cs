@@ -73,7 +73,7 @@ public class CockroachPatrol : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             audioManager.PlaySFX(audioManager.robotBreak, 0.5f);
-            scoreManager.AddScore(10);
+            scoreManager.AddScore(50);
             StartCoroutine(CockroachSquish());
         }
     }

@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        scoreManager.AddScore(100);
+        scoreManager.AddScore(2000);
         gameEnded = true;
         StartCoroutine(ContinuousJumping());
         StartCoroutine(UpdateSprites());

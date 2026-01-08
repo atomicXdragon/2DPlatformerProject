@@ -116,7 +116,7 @@ public class EnemyPatrol : MonoBehaviour
                 if (health <= 0)
                 {
                     audioManager.PlaySFX(audioManager.robotBreak, 0.5f);
-                    scoreManager.AddScore(10);
+                    scoreManager.AddScore(150);
                     Destroy(gameObject);
                 }
             }
